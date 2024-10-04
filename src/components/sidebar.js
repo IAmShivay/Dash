@@ -11,7 +11,6 @@ import {
   Mail,
   LogOut,
   CircleUser,
-  Plus,
   Crown,
 } from "lucide-react";
 import styles from "../Styles/Sidebar.module.css";
@@ -115,6 +114,8 @@ const MemoizedMenuItem = memo(({ icon: Icon, text, hasDropdown, dropdownItems, m
     )}
   </div>
 ));
+
+MemoizedMenuItem.displayName = "MemoizedMenuItem";
 
 MemoizedMenuItem.propTypes = {
   icon: PropTypes.elementType.isRequired,
