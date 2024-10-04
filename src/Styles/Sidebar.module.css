@@ -1,0 +1,127 @@
+.sidebar {
+    @apply h-screen w-64 bg-white backdrop-blur-sm border-r border-gray-200 px-4 py-6 flex flex-col;
+  }
+  
+  .logo {
+    @apply mb-8 px-4;
+  }
+  
+  .logoImage {
+    @apply h-10;
+  }
+  
+  .navigation {
+    @apply flex-grow;
+  }
+  
+  .menuItem {
+    @apply mb-2;
+  }
+  
+  .menuButton {
+    @apply w-full flex items-center px-4 py-2 text-gray-700 hover:bg-white/50 rounded-lg transition-colors duration-200;
+  }
+  
+  .menuIcon {
+    @apply h-5 w-5 mr-3;
+  }
+  
+  .menuText {
+    @apply flex-grow text-left;
+  }
+  
+  .dropdownIcon {
+    @apply h-4 w-4 transition-transform duration-200;
+  }
+  
+  .dropdownIconOpen {
+    @apply transform rotate-180;
+  }
+  
+  .dropdownMenu {
+    @apply ml-12 mt-2 space-y-2;
+  }
+  
+  .dropdownItem {
+    @apply w-full text-left px-4 py-2 text-sm text-gray-600 hover:text-gray-800 hover:bg-white/50 rounded-lg transition-colors duration-200;
+  }
+  
+  .addButton {
+    @apply p-1 hover:bg-gray-100 rounded-full ml-2;
+  }
+  
+  .addIcon {
+    @apply h-4 w-4;
+  }
+  
+  .userSection {
+    @apply border-t border-gray-200 pt-4 mt-6 space-y-4;
+  }
+  
+  .planCard {
+    @apply p-4 rounded-lg bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100;
+  }
+  
+  .planHeader {
+    @apply flex items-center justify-between mb-3;
+  }
+  
+  .planTitle {
+    @apply flex items-center font-medium text-blue-900;
+  }
+  
+  .crownIcon {
+    @apply h-5 w-5 text-blue-600 mr-2;
+  }
+  
+  .upgradeButton {
+    @apply px-3 py-1 text-xs bg-white hover:bg-blue-50 text-blue-600 rounded-md transition-colors duration-200;
+  }
+  
+  .usageSection {
+    @apply space-y-2;
+  }
+  
+  .usageHeader {
+    @apply flex justify-between text-xs text-gray-600;
+  }
+  
+  .progressBarBg {
+    @apply w-full bg-gray-200 rounded-full h-1.5;
+  }
+  
+  .progressBar {
+    @apply bg-blue-600 h-1.5 rounded-full transition-all duration-300;
+  }
+  
+  .daysRemaining {
+    @apply text-xs text-gray-500;
+  }
+  
+  .userInfo {
+    @apply flex items-center px-4 py-3 rounded-lg bg-white shadow-sm;
+  }
+  
+  .userIcon {
+    @apply h-10 w-10 text-gray-400;
+  }
+  
+  .userDetails {
+    @apply ml-3;
+  }
+  
+  .userName {
+    @apply text-sm font-medium text-gray-700;
+  }
+  
+  .userRole {
+    @apply text-xs text-gray-500;
+  }
+  
+  .logoutButton {
+    @apply w-full flex items-center px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200;
+  }
+  
+  .logoutIcon {
+    @apply h-5 w-5 mr-3;
+  }

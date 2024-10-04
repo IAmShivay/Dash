@@ -1,0 +1,15 @@
+/* src/Styles/fonts.css */
+
+@font-face {
+    font-family: 'CustomFont'; /* Replace with your desired font name */
+    src: url('../fonts/CustomFont.woff2') format('woff2'),
+         url('../fonts/CustomFont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  /* Optional: Apply the font globally */
+  body {
+    font-family: 'CustomFont', Arial, Helvetica, sans-serif; /* Fallback fonts */
+  }
+  
