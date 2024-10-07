@@ -1,3 +1,5 @@
+
+
 "use client";
 
 import React, { useState, useCallback, memo } from "react";
@@ -48,25 +50,64 @@ const Sidebar = () => {
     reports: false,
   });
 
-  const toggleMenu = useCallback((menu) => {
+  const [currentMenu, setCurrentMenu] = useState(null);
+  const [currentSubmenu, setCurrentSubmenu] = useState(null);
+
+  const toggleMenu = useCallback((menuKey, menuText, submenuText) => {
+    if (submenuText) {
+      setCurrentMenu(menuText);
+      setCurrentSubmenu(submenuText);
+    } else {
+      setCurrentMenu(menuText);
+      setCurrentSubmenu(null); // Reset submenu when main menu is clicked
+    }
     setOpenMenus((prev) => ({
       ...prev,
-      [menu]: !prev[menu],
+      [menuKey]: !prev[menuKey],
     }));
   }, []);
 
+  const renderContent = () => {
+    switch (currentMenu) {
+      case "Users":
+        switch (currentSubmenu) {
+          case "View Users":
+            return <ViewUsers />;
+          case "Add User":
+            return <AddUser />;
+          case "User Roles":
+            return <UserRoles />;
+          default:
+            return null;
+        }
+      case "Reports":
+        switch (currentSubmenu) {
+          case "Sales Report":
+            return <SalesReport />;
+          case "User Activity":
+            return <UserActivity />;
+          case "Analytics":
+            return <Analytics />;
+          default:
+            return null;
+        }
+      case "Dashboard":
+        return <Dashboard />;
+      case "Settings":
+        return <SettingsComponent />;
+      case "Messages":
+        return <Messages />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className={styles.sidebar}>
-      {/* Company Logo */}
       <div className={styles.logo}>
-        <img
-          src="/api/placeholder/120/40"
-          alt="Company Logo"
-          className={styles.logoImage}
-        />
+        <img src="/api/placeholder/120/40" alt="Company Logo" className={styles.logoImage} />
       </div>
 
-      {/* Navigation Menu */}
       <nav className={styles.navigation}>
         {menuItems.map((menuItem, index) => (
           <MemoizedMenuItem
@@ -82,31 +123,33 @@ const Sidebar = () => {
         ))}
       </nav>
 
-      {/* User Section */}
+      <div className={styles.content}>
+        {renderContent()}
+      </div>
+
       <UserSection userPlanData={userPlanData} />
     </div>
   );
 };
 
-// Memoized MenuItem to prevent unnecessary re-renders
 const MemoizedMenuItem = memo(({ icon: Icon, text, hasDropdown, dropdownItems, menuKey, isOpen, toggleMenu }) => (
   <div className={styles.menuItem}>
     <button
-      onClick={() => hasDropdown && toggleMenu(menuKey)}
+      onClick={() => hasDropdown && toggleMenu(menuKey, text)}
       className={styles.menuButton}
     >
       <Icon className={styles.menuIcon} />
       <span className={styles.menuText}>{text}</span>
-      {hasDropdown && (
-        <ChevronDown
-          className={`${styles.dropdownIcon} ${isOpen ? styles.dropdownIconOpen : ""}`}
-        />
-      )}
+      {hasDropdown && <ChevronDown className={`${styles.dropdownIcon} ${isOpen ? styles.dropdownIconOpen : ""}`} />}
     </button>
     {hasDropdown && isOpen && (
       <div className={styles.dropdownMenu}>
         {dropdownItems.map((item, index) => (
-          <button key={index} className={styles.dropdownItem}>
+          <button
+            key={index}
+            className={styles.dropdownItem}
+            onClick={() => toggleMenu(menuKey, text, item)} // Pass submenu item text to toggleMenu
+          >
             {item}
           </button>
         ))}
@@ -150,14 +193,9 @@ const PlanCard = ({ userPlanData }) => (
         <span>{userPlanData.usagePercent}%</span>
       </div>
       <div className={styles.progressBarBg}>
-        <div
-          className={styles.progressBar}
-          style={{ width: `${userPlanData.usagePercent}%` }}
-        ></div>
+        <div className={styles.progressBar} style={{ width: `${userPlanData.usagePercent}%` }}></div>
       </div>
-      <p className={styles.daysRemaining}>
-        {userPlanData.daysRemaining} days remaining
-      </p>
+      <p className={styles.daysRemaining}>{userPlanData.daysRemaining} days remaining</p>
     </div>
   </div>
 );
@@ -186,5 +224,16 @@ const LogoutButton = () => (
     <span>Logout</span>
   </button>
 );
+
+// Dummy components for demonstration
+const ViewUsers = () => <div>View Users Component</div>;
+const AddUser = () => <div>Add User Component</div>;
+const UserRoles = () => <div>User Roles Component</div>;
+const SalesReport = () => <div>Sales Report Component</div>;
+const UserActivity = () => <div>User Activity Component</div>;
+const Analytics = () => <div>Analytics Component</div>;
+const Dashboard = () => <div>Dashboard Component</div>;
+const SettingsComponent = () => <div>Settings Component</div>;
+const Messages = () => <div>Messages Component</div>;
 
 export default Sidebar;
