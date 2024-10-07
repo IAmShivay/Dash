@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Rubik_Bubbles } from "next/font/google";
+import DashboardLayout from "../components/Dasbordlayout";
 const roboto = Rubik_Bubbles({ weight: ["400"], subsets: ["latin"] });
 
 const geistSans = localFont({
@@ -30,7 +31,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased${roboto.className}`}
       >
-        {children}
+        {" "}
+        <DashboardLayout>{children}</DashboardLayout>
       </body>
     </html>
   );
