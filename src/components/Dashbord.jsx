@@ -1,7 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import { LayoutGrid, List, Calendar, PlayCircle } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -10,9 +16,28 @@ import SearchBar from "./searchbar";
 const categories = ["All", "Technology", "Design", "Business", "Lifestyle"];
 
 const blogPosts = [
-  { id: 1, title: "The Future of AI", description: "Exploring the latest advancements in artificial intelligence.", image: "/api/placeholder/800/400", date: new Date("2024-10-01") },
-  { id: 2, title: "Sustainable Design Practices", description: "How designers are incorporating eco-friendly solutions.", image: "/api/placeholder/800/400", date: new Date("2024-10-03") },
-  { id: 3, title: "Startup Success Stories", description: "Learn from entrepreneurs who made it big.", image: "/api/placeholder/800/400", date: new Date("2024-10-05") },
+  {
+    id: 1,
+    title: "The Future of AI",
+    description:
+      "Exploring the latest advancements in artificial intelligence.",
+    image: "/api/placeholder/800/400",
+    date: new Date("2024-10-01"),
+  },
+  {
+    id: 2,
+    title: "Sustainable Design Practices",
+    description: "How designers are incorporating eco-friendly solutions.",
+    image: "/api/placeholder/800/400",
+    date: new Date("2024-10-03"),
+  },
+  {
+    id: 3,
+    title: "Startup Success Stories",
+    description: "Learn from entrepreneurs who made it big.",
+    image: "/api/placeholder/800/400",
+    date: new Date("2024-10-05"),
+  },
 ];
 
 const Dashboard = () => {
@@ -51,8 +76,12 @@ const Dashboard = () => {
                 </CardHeader>
                 <CardContent>
                   <CardDescription>{post.description}</CardDescription>
-                  <p className="text-sm text-gray-500 mt-2">{post.date.toDateString()}</p>
-                  <div className="mt-2 text-gray-400">This is a demo subtitle under the post.</div>
+                  <p className="text-sm text-gray-500 mt-2">
+                    {post.date.toDateString()}
+                  </p>
+                  <div className="mt-2 text-gray-400">
+                    This is a demo subtitle under the post.
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -72,9 +101,15 @@ const Dashboard = () => {
                 </div>
                 <div className="w-3/4 p-4">
                   <CardTitle>{post.title}</CardTitle>
-                  <CardDescription className="mt-2">{post.description}</CardDescription>
-                  <p className="text-sm text-gray-500 mt-2">{post.date.toDateString()}</p>
-                  <div className="mt-2 text-gray-400">This is a demo subtitle under the post.</div>
+                  <CardDescription className="mt-2">
+                    {post.description}
+                  </CardDescription>
+                  <p className="text-sm text-gray-500 mt-2">
+                    {post.date.toDateString()}
+                  </p>
+                  <div className="mt-2 text-gray-400">
+                    This is a demo subtitle under the post.
+                  </div>
                 </div>
               </Card>
             ))}
@@ -86,9 +121,15 @@ const Dashboard = () => {
             {filteredPosts.map((post) => (
               <Card key={post.id} className="p-4">
                 <CardTitle>{post.title}</CardTitle>
-                <CardDescription className="mt-2">{post.description}</CardDescription>
-                <p className="text-sm text-gray-500 mt-2">{post.date.toDateString()}</p>
-                <div className="mt-2 text-gray-400">This is a demo subtitle under the post.</div>
+                <CardDescription className="mt-2">
+                  {post.description}
+                </CardDescription>
+                <p className="text-sm text-gray-500 mt-2">
+                  {post.date.toDateString()}
+                </p>
+                <div className="mt-2 text-gray-400">
+                  This is a demo subtitle under the post.
+                </div>
               </Card>
             ))}
           </div>
@@ -106,6 +147,7 @@ const Dashboard = () => {
       <div className="flex flex-wrap items-center justify-between pb-2">
         {/* Categories */}
         <div className="flex space-x-2 overflow-x-auto">
+          
           {categories.map((category) => (
             <Button
               key={category}
@@ -147,7 +189,9 @@ const Dashboard = () => {
             customInput={
               <Button variant="outline" className="flex items-center space-x-2">
                 <Calendar size={16} />
-                <span>{selectedDate ? selectedDate.toDateString() : "Select Date"}</span>
+                <span>
+                  {selectedDate ? selectedDate.toDateString() : "Select Date"}
+                </span>
               </Button>
             }
             dateFormat="MMMM d, yyyy"
@@ -157,13 +201,14 @@ const Dashboard = () => {
 
       {renderPosts()}
 
-      <div className="flex flex-col items-start space-y-1 mt-6">
+      <div className="flex flex-col items-start space-y-1 mt-6 ml-5">
         <div className="flex items-center space-x-2">
           <PlayCircle size={20} />
           <span>Listen to Audio Transcription for Each Post</span>
         </div>
         <span className="text-gray-400">
-          Additional insights available through audio transcription for each blog post.
+          Additional insights available through audio transcription for each
+          blog post.
         </span>
       </div>
     </div>
