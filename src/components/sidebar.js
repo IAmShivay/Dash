@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import React, { useState, useCallback, memo } from "react";
@@ -53,19 +51,30 @@ const Sidebar = () => {
   const [currentMenu, setCurrentMenu] = useState(null);
   const [currentSubmenu, setCurrentSubmenu] = useState(null);
 
-  const toggleMenu = useCallback((menuKey, menuText, submenuText) => {
-    if (submenuText) {
-      setCurrentMenu(menuText);
-      setCurrentSubmenu(submenuText);
-    } else {
-      setCurrentMenu(menuText);
-      setCurrentSubmenu(null); // Reset submenu when main menu is clicked
-    }
-    setOpenMenus((prev) => ({
-      ...prev,
-      [menuKey]: !prev[menuKey],
-    }));
-  }, []);
+  const toggleMenu = useCallback(
+    (menuKey, menuText, submenuText) => {
+      if (submenuText) {
+        setCurrentMenu(menuText);
+        setCurrentSubmenu(submenuText);
+      } else {
+        // This will handle all main menu clicks
+        setCurrentMenu(menuText);
+        setCurrentSubmenu(null); // Reset submenu when main menu is clicked
+        if (openMenus[menuKey]) {
+          setOpenMenus((prev) => ({
+            ...prev,
+            [menuKey]: false,
+          }));
+        } else {
+          setOpenMenus((prev) => ({
+            ...prev,
+            [menuKey]: true,
+          }));
+        }
+      }
+    },
+    [openMenus]
+  );
 
   const renderContent = () => {
     switch (currentMenu) {
@@ -105,7 +114,11 @@ const Sidebar = () => {
   return (
     <div className={styles.sidebar}>
       <div className={styles.logo}>
-        <img src="/api/placeholder/120/40" alt="Company Logo" className={styles.logoImage} />
+        <img
+          src="/api/placeholder/120/40"
+          alt="Company Logo"
+          className={styles.logoImage}
+        />
       </div>
 
       <nav className={styles.navigation}>
@@ -123,40 +136,54 @@ const Sidebar = () => {
         ))}
       </nav>
 
-      <div className={styles.content}>
-        {renderContent()}
-      </div>
+      <div className={styles.content}>{renderContent()}</div>
 
       <UserSection userPlanData={userPlanData} />
     </div>
   );
 };
 
-const MemoizedMenuItem = memo(({ icon: Icon, text, hasDropdown, dropdownItems, menuKey, isOpen, toggleMenu }) => (
-  <div className={styles.menuItem}>
-    <button
-      onClick={() => hasDropdown && toggleMenu(menuKey, text)}
-      className={styles.menuButton}
-    >
-      <Icon className={styles.menuIcon} />
-      <span className={styles.menuText}>{text}</span>
-      {hasDropdown && <ChevronDown className={`${styles.dropdownIcon} ${isOpen ? styles.dropdownIconOpen : ""}`} />}
-    </button>
-    {hasDropdown && isOpen && (
-      <div className={styles.dropdownMenu}>
-        {dropdownItems.map((item, index) => (
-          <button
-            key={index}
-            className={styles.dropdownItem}
-            onClick={() => toggleMenu(menuKey, text, item)} // Pass submenu item text to toggleMenu
-          >
-            {item}
-          </button>
-        ))}
-      </div>
-    )}
-  </div>
-));
+const MemoizedMenuItem = memo(
+  ({
+    icon: Icon,
+    text,
+    hasDropdown,
+    dropdownItems,
+    menuKey,
+    isOpen,
+    toggleMenu,
+  }) => (
+    <div className={styles.menuItem}>
+      <button
+        onClick={() => toggleMenu(menuKey, text)} // Toggle for all menu items
+        className={styles.menuButton}
+      >
+        <Icon className={styles.menuIcon} />
+        <span className={styles.menuText}>{text}</span>
+        {hasDropdown && (
+          <ChevronDown
+            className={`${styles.dropdownIcon} ${
+              isOpen ? styles.dropdownIconOpen : ""
+            }`}
+          />
+        )}
+      </button>
+      {hasDropdown && isOpen && (
+        <div className={styles.dropdownMenu}>
+          {dropdownItems.map((item, index) => (
+            <button
+              key={index}
+              className={styles.dropdownItem}
+              onClick={() => toggleMenu(menuKey, text, item)} // Pass submenu item text to toggleMenu
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+);
 
 MemoizedMenuItem.displayName = "MemoizedMenuItem";
 
@@ -193,9 +220,14 @@ const PlanCard = ({ userPlanData }) => (
         <span>{userPlanData.usagePercent}%</span>
       </div>
       <div className={styles.progressBarBg}>
-        <div className={styles.progressBar} style={{ width: `${userPlanData.usagePercent}%` }}></div>
+        <div
+          className={styles.progressBar}
+          style={{ width: `${userPlanData.usagePercent}%` }}
+        ></div>
       </div>
-      <p className={styles.daysRemaining}>{userPlanData.daysRemaining} days remaining</p>
+      <p className={styles.daysRemaining}>
+        {userPlanData.daysRemaining} days remaining
+      </p>
     </div>
   </div>
 );
